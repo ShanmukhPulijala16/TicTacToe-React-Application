@@ -35,16 +35,16 @@ const winningCombos = [
 const checkWinner = (tiles, setStrikeClass, setGameState) => {
     for (const combination of winningCombos) {
         const { combo, strikeClass } = combination;
-        if (tiles[combo[0]] != null && tiles[combo[0]] == tiles[combo[1]] && tiles[combo[0]] == tiles[combo[2]]) {
+        if (tiles[combo[0]] !== null && tiles[combo[0]] === tiles[combo[1]] && tiles[combo[0]] === tiles[combo[2]]) {
             setStrikeClass(strikeClass);
-            if (tiles[combo[0]] == PLAYER_O) {
+            if (tiles[combo[0]] === PLAYER_O) {
                 setGameState(GameState.playerOWins);
             } else {
                 setGameState(GameState.playerXWins);
             }
             return;
         }
-        const areAllTilesFilled = tiles.every((element) => element != null && element != undefined);
+        const areAllTilesFilled = tiles.every((element) => element !== null && element !== undefined);
         if (areAllTilesFilled) {
             setGameState(GameState.draw);
         }
@@ -59,11 +59,11 @@ const TicTacToe = () => {
     const [gameState, setGameState] = useState(GameState.isInProgress);
 
     useEffect(() => {
-        checkWinner(tiles, setStrikeClass, setGameState, playerTurn);
+        checkWinner(tiles, setStrikeClass, setGameState);
     }, [tiles]);
 
     useEffect(() => {
-        if (gameState != GameState.isInProgress) {
+        if (gameState !== GameState.isInProgress) {
             gameOverSound.play();
             console.log("gameOverSound");
         } else {
@@ -95,7 +95,7 @@ const TicTacToe = () => {
         newTiles[index] = playerTurn;
 
         setTiles(newTiles);
-        if (playerTurn == PLAYER_X) {
+        if (playerTurn === PLAYER_X) {
             setPlayerTurn(PLAYER_O);
         } else {
             setPlayerTurn(PLAYER_X);
